@@ -24,30 +24,29 @@ const onSubmit = async () => {
   const { error, data } = await supabase.auth.signUp({
     email: state.email,
     password: state.password,
-	options: {
-    data: {
-		name: state.name,
-		},
-	},
+    options: {
+      data: {
+        name: state.name
+      }
+    }
   })
   if (error) console.log(error)
   if (data) {
-	const { data, error } = await supabase.auth.signInWithPassword({
-		email: state.email,
-		password: state.password
-		// options: {
-		//   emailRedirectTo: 'http://localhost:3000/confirm'
-		// }
-	})
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: state.email,
+      password: state.password
+      // options: {
+      //   emailRedirectTo: 'http://localhost:3000/confirm'
+      // }
+    })
   	if (error) console.log(error)
   	if (data) {
-		await useAsyncData('user', () => userStore.fetchSupabaseUser())
-		toast.add({ title: 'User created', icon: 'i-heroicons-check-circle' })
-		navigateTo('/')
-	}
+      await useAsyncData('user', () => userStore.fetchSupabaseUser())
+      toast.add({ title: 'User created', icon: 'i-heroicons-check-circle' })
+      navigateTo('/')
+    }
   }
 }
-
 </script>
 
 <template>
@@ -69,8 +68,8 @@ const onSubmit = async () => {
           placeholder="john.doe@example.com"
         />
       </UFormGroup>
-      
-	  <UFormGroup
+
+      <UFormGroup
         label="Name"
         name="name"
       >

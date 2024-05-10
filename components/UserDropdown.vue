@@ -73,6 +73,7 @@ const items = computed(() => [
   >
     <template #default="{ open }">
       <UButton
+		v-if="userStore.name"
         color="gray"
         variant="ghost"
         class="w-full"
@@ -94,6 +95,7 @@ const items = computed(() => [
           />
         </template>
       </UButton>
+	  <USkeleton v-else class="w-full h-8" />
     </template>
 
     <template #account>

@@ -20,12 +20,12 @@ export default defineNuxtConfig({
     strict: false
   },
   supabase: {
-	// redirect: false
+    // redirect: false
     redirectOptions: {
       login: '/login',
       callback: '/confirm',
       include: undefined,
-      exclude: ['/create-account', '/reset-password', '/confirm'],
+      exclude: ['/signup', '/reset-password', '/confirm'],
       cookieRedirect: false
     }
   },
