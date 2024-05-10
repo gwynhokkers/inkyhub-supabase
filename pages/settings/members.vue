@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { Member } from '~/types'
+
 const supabase = useSupabaseClient()
 // const { data: members } = await useFetch<Member[]>('/api/members', { default: () => [] })
 const { data } = await supabase
-		.from('profiles')
-		.select('name, avatar, location, username, role')
+  .from('users')
+  .select('name, avatar, username, role')
 
-console.log(data);
+console.log(data)
 // const members = ref([])
 const members = ref<Member[]>(data || [])
 

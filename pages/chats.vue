@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Chat } from '~/types'
 
+const createChatModalOpen = ref(false)
+
 const tabItems = [{
   label: 'All'
 }, {
@@ -54,6 +56,11 @@ watch(filteredChats, () => {
     selectedChat.value = null
   }
 })
+
+// Create new chat
+// const openCreateChat = () => {
+
+// }
 </script>
 
 <template>
@@ -73,6 +80,21 @@ watch(filteredChats, () => {
             :items="tabItems"
             :ui="{ wrapper: '', list: { height: 'h-9', tab: { height: 'h-7', size: 'text-[13px]' } } }"
           />
+          <UButton
+            icon="i-heroicons-plus"
+            size="md"
+            class="ml-1.5 rounded-full"
+            @click="createChatModalOpen = true"
+          />
+          <UDashboardModal
+            v-model="createChatModalOpen"
+            title="New chat"
+            description="Create a new chat and add members to it."
+            :ui="{ width: 'sm:max-w-md' }"
+          >
+            <!-- ~/components/users/UsersForm.vue -->
+            <ChatForm @close="createChatModalOpen = false" />
+          </UDashboardModal>
         </template>
       </UDashboardNavbar>
 

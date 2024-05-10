@@ -5,6 +5,8 @@ const userStore = useUserStore()
 const supabase = useSupabaseClient()
 const toast = useToast()
 
+const error = ref<string | null>(null)
+
 const schema = object({
   email: string().email('Invalid email').required('Required'),
   password: string()
@@ -12,38 +14,82 @@ const schema = object({
     .required('Required')
 })
 
-const state = reactive({
-  email: undefined,
-  password: undefined,
-  name: undefined
-})
+const fields = [
+  {
+    name: 'name',
+    label: 'Name',
+    type: 'text',
+    placeholder: 'Enter your name'
+  },
+  {
+    name: 'username',
+    label: 'Username',
+    type: 'text',
+    placeholder: 'Enter your username'
+  },
+  {
+    name: 'email',
+    type: 'text',
+    label: 'Email',
+    placeholder: 'Enter your email'
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+    placeholder: 'Enter your password'
+  }
+]
 
-const onSubmit = async () => {
-  console.log('signing up...', state.email)
+// const state = reactive({
+//   email: undefined,
+//   password: undefined,
+//   name: undefined
+// })
+
+const onSubmit = async (formData) => {
+  console.log('signing up...', formData.email)
 
   const { error, data } = await supabase.auth.signUp({
-    email: state.email,
-    password: state.password,
+    email: formData.email,
+    password: formData.password,
     options: {
       data: {
-        name: state.name
+        name: formData.name,
+        username: formData.username
       }
     }
   })
-  if (error) console.log(error)
-  if (data) {
+  console.log(data, error)
+
+  if (error) {
+    console.log(error)
+
+    error.value = error.message
+  } else if (data) {
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: state.email,
-      password: state.password
+      email: formData.email,
+      password: formData.password
       // options: {
       //   emailRedirectTo: 'http://localhost:3000/confirm'
       // }
     })
-  	if (error) console.log(error)
-  	if (data) {
-      await useAsyncData('user', () => userStore.fetchSupabaseUser())
-      toast.add({ title: 'User created', icon: 'i-heroicons-check-circle' })
-      navigateTo('/')
+    if (error) {
+      console.log(error)
+      error.value = error.message
+    }
+    if (data) {
+      try {
+        await useAsyncData('user', () => userStore.fetchSupabaseUser()).then(() => {
+          toast.add({ title: 'User created', icon: 'i-heroicons-check-circle' })
+		  	navigateTo('/')
+        })
+      } catch (error) {
+        console.log(error)
+        error.value = error.message
+      }
+
+    //   navigateTo('/')
     }
   }
 }
@@ -51,58 +97,37 @@ const onSubmit = async () => {
 
 <template>
   <!-- :validate-on="['submit']" -->
-  <div class="">
-    <UForm
-      :state="state"
-      :schema="schema"
-      class="space-y-4"
-      @submit="onSubmit"
-    >
-      <UFormGroup
-        label="Email"
-        name="email"
+  <div class="flex justify-center flex-col gap-4 items-center w-full h-full">
+    <UCard class="max-w-sm w-full">
+      <UAuthForm
+        title="Welcome to Inky Hub!"
+        description="Enter your credentials to create your account."
+        :schema="schema"
+        :fields="fields"
+        align="top"
+        icon="i-heroicons-lock-closed"
+        :ui="{ base: 'text-center', footer: 'text-center' }"
+        :loading="false"
+        @submit="onSubmit"
       >
-        <UInput
-          v-model="state.email"
-          type="email"
-          placeholder="john.doe@example.com"
-        />
-      </UFormGroup>
+        <template #description>
+          Sign up to access your account.
+        </template>
 
-      <UFormGroup
-        label="Name"
-        name="name"
-      >
-        <UInput
-          v-model="state.email"
-          type="text"
-          placeholder="John Doe"
-        />
-      </UFormGroup>
-
-      <UFormGroup
-        label="Password"
-        name="password"
-      >
-        <UInput
-          v-model="state.password"
-          type="password"
-        />
-      </UFormGroup>
-
-      <div class="flex justify-end gap-3">
-        <!-- <UButton
-		label="Cancel"
-			color="gray"
-			variant="ghost"
-			@click="emit('close')"
-		  /> -->
-        <UButton
-          type="submit"
-          label="Submit"
-          color="black"
-        />
-      </div>
-    </UForm>
+        <!-- <template #password-hint>
+          <NuxtLink to="/" class="text-primary font-medium">
+            Forgot password?
+          </NuxtLink>
+        </template> -->
+        <template #validation>
+          <UAlert v-if="error" color="red" icon="i-heroicons-information-circle-20-solid" title="Error signing in" />
+        </template>
+        <template #footer>
+          By signing in, you agree to our <NuxtLink to="/" class="text-primary font-medium">
+            Terms of Service
+          </NuxtLink>.
+        </template>
+      </UAuthForm>
+    </UCard>
   </div>
 </template>
