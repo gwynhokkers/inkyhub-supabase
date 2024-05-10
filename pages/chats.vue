@@ -176,7 +176,7 @@ watch(filteredChats, () => {
         </UDashboardNavbar>
 
         <!-- ~/components/chat/ChatMessages.vue -->
-        <ChatMessages :chat="selectedChat" />
+        <!-- <ChatMessages :chat="selectedChat" /> -->
       </template>
       <div
         v-else

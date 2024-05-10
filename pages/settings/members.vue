@@ -1,13 +1,20 @@
 <script setup lang="ts">
 import type { Member } from '~/types'
+const supabase = useSupabaseClient()
+// const { data: members } = await useFetch<Member[]>('/api/members', { default: () => [] })
+const { data } = await supabase
+		.from('profiles')
+		.select('name, avatar, location, username, role')
 
-const { data: members } = await useFetch<Member[]>('/api/members', { default: () => [] })
+console.log(data);
+// const members = ref([])
+const members = ref<Member[]>(data || [])
 
 const q = ref('')
 const isInviteModalOpen = ref(false)
 
 const filteredMembers = computed(() => {
-  return members.value.filter((member) => {
+  return members?.value?.filter((member) => {
     return member.name.search(new RegExp(q.value, 'i')) !== -1 || member.username.search(new RegExp(q.value, 'i')) !== -1
   })
 })

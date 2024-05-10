@@ -1,6 +1,7 @@
 <!-- ![nuxt-ui-dashboard-social-card](https://github.com/nuxt-ui-pro/dashboard/assets/739984/f785284b-7db2-4732-af0e-2cb3c0bd7ca2) -->
 
-# Inky Hub - A Hub for fellow Squid
+# Inky Hub - Inky Hub - A Hub for cephalopods
+Inky Hub is a hub for cephalopods. It is a place where cephalopods can come together and share their thoughts and ideas.
 
 [![Nuxt UI Pro](https://img.shields.io/badge/Made%20with-Nuxt%20UI%20Pro-00DC82?logo=nuxt.js&labelColor=020420)](https://ui.nuxt.com/pro)
 

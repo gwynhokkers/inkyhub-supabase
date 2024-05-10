@@ -79,15 +79,15 @@ defineShortcuts({
           :class="[chat.unread && 'font-semibold']"
         >
           <div class="flex items-center gap-3">
-            {{ chat.from.name }}
+            {{ chat.title }}
 
             <UChip v-if="chat.unread" />
           </div>
 
-          <span>{{ isToday(new Date(chat.date)) ? format(new Date(chat.date), 'HH:mm') : format(new Date(chat.date), 'dd MMM') }}</span>
+          <!-- <span>{{ isToday(new Date(chat.date)) ? format(new Date(chat.date), 'HH:mm') : format(new Date(chat.date), 'dd MMM') }}</span> -->
         </div>
         <p class="text-gray-400 dark:text-gray-500 line-clamp-1">
-          {{ chat.body }}
+          <!-- {{ chat.body }} -->
         </p>
       </div>
 

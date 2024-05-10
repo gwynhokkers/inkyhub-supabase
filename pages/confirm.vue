@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const user = useSupabaseUser()
-const profileStore = useProfileStore()
+const userStore = useUserStore()
 
 // Get redirect path from cookies
 const cookieName = useRuntimeConfig().public.supabase.cookieName
@@ -11,7 +11,7 @@ watch(user, async () => {
     // Clear cookie
     useCookie(`${cookieName}-redirect-path`).value = null
     // call fetchUser in store
-    await useAsyncData('user', () => profileStore.fetchProfile())
+    await useAsyncData('user', () => userStore.fetchSupabaseUser())
 
     // Redirect to path
     return navigateTo(redirectPath || '/')

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 const colorMode = useColorMode()
-
 const color = computed(() => colorMode.value === 'dark' ? '#111827' : 'white')
+const userStore = useUserStore()
+onBeforeMount(() => {
+  userStore.fetchSupabaseUser()
+})
 
 useHead({
   meta: [
@@ -17,8 +20,8 @@ useHead({
   }
 })
 
-const title = 'Nuxt UI Pro - Dashboard template'
-const description = 'Nuxt UI Pro is a collection of premium Vue components built on top of Nuxt UI to create beautiful & responsive Nuxt applications in minutes.'
+const title = 'Inky Hub - A Hub for cephalopods'
+const description = 'Inky Hub is a hub for cephalopods. It is a place where cephalopods can come together and share their thoughts and ideas.'
 
 useSeoMeta({
   title,

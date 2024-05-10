@@ -23,9 +23,7 @@ export interface Mail {
 export interface Chat {
   id: number
   unread?: boolean
-  from: User
-  body: string
-  date: string
+  title: string
 }
 
 export interface Message {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { object, string, type InferType } from 'yup'
-const profileStore = useProfileStore()
+const userStore = useUserStore()
 const user = useSupabaseUser()
 const supabase = useSupabaseClient()
 
@@ -34,14 +34,14 @@ const onSubmit = async () => {
 		// fetch profile from API
 		const { data } = await useAsyncData('profile', async () => {
 			const { data } = await supabase
-				.from('profiles')
+				.from('users')
 				.select('name, avatar, status, location')
 				.eq('id', user.value.id)
 				.single()
 
 			return data
 		})
-		console.warn('Profile:::', data.value);
+		console.warn('User Profile:::', data.value);
 
 		navigateTo('/')
 	}
@@ -60,7 +60,7 @@ const resetPassword = async () => {
 
 <template>
   <!-- :validate-on="['submit']" -->
-  <div class="">
+  <div class="flex justify-center flex-col gap-4 items-center w-full h-full">
     <UForm
       :state="state"
       :schema="schema"
@@ -102,11 +102,24 @@ const resetPassword = async () => {
         />
       </div>
     </UForm>
-    <p>Reset password</p>
-	<UButton
-		label="Reset"
-		color="black"
-		@click="resetPassword"
-	/>
+	<div class="flex flex-col gap-4 items-baseline">
+		<p>
+			Don't have an account?
+			<ULink
+				href="/signup"
+				class="text-green-400"
+			>
+				Sign up
+			</ULink>
+		</p>
+		<p>
+			Forgotten your password?
+			<ULink
+				@click="resetPassword"
+				class="text-green-400">
+				Reset password
+			</ULink>
+		</p>
+	</div>
   </div>
 </template>

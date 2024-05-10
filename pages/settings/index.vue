@@ -4,24 +4,26 @@ import type { FormError, FormSubmitEvent } from '#ui/types'
 const fileRef = ref<HTMLInputElement>()
 const isDeleteAccountModalOpen = ref(false)
 
-const profileStore = useProfileStore()
+const userStore = useUserStore()
 const user = useSupabaseUser()
 
 const state = ref({
-  name: profileStore.name,
-  email: '',
-  username: '',
+  name: userStore.name,
+  email: userStore.email,
+  username: userStore.username,
   avatar: '',
   bio: '',
   password_current: '',
   password_new: ''
 })
 
-// Fetch profile data from store
+// const { data } = useAsyncData('profile', () => userStore.fetchSupabaseUser())
+
+// // Fetch profile data from store
 onMounted(() => {
-  state.value.name = profileStore.name
+  state.value.name = userStore.name
   state.value.email = user.value.email
-  state.value.username = profileStore.username
+  state.value.username = userStore.username
 })
 
 const toast = useToast()
