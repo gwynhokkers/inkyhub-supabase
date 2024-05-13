@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Chat } from '~/types'
 
+const supabase = useSupabaseClient()
+
 const createChatModalOpen = ref(false)
 
 const tabItems = [{
@@ -26,15 +28,30 @@ const dropdownItems = [
     icon: 'i-heroicons-pause-circle'
   }]]
 
-const { data: chats } = await useFetch<Chat[]>('/api/chats', { default: () => [] })
+// const { data: chats } = await useFetch<Chat[]>('/api/chats', { default: () => [] })
+const { data: chats, error } = await supabase.from('chats').select(
+ `
+  id,
+  name,
+  chatsUsers: chats_users (
+	user: users (
+	  id,
+	  name,
+	  avatar
+	)
+  )
+ `
+)
+
+console.log(chats, error)
 
 // Filter chats based on the selected tab
 const filteredChats = computed(() => {
   if (selectedTab.value === 1) {
-    return chats.value.filter(chat => !!chat.unread)
+    // return chats.filter(chat => !!chat.unread)
   }
 
-  return chats.value
+  return chats
 })
 
 const selectedChat = ref<Chat | null>()
@@ -56,11 +73,6 @@ watch(filteredChats, () => {
     selectedChat.value = null
   }
 })
-
-// Create new chat
-// const openCreateChat = () => {
-
-// }
 </script>
 
 <template>
@@ -198,7 +210,7 @@ watch(filteredChats, () => {
         </UDashboardNavbar>
 
         <!-- ~/components/chat/ChatMessages.vue -->
-        <!-- <ChatMessages :chat="selectedChat" /> -->
+        <ChatMessages :chat="selectedChat" />
       </template>
       <div
         v-else

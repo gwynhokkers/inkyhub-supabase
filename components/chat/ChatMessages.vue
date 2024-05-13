@@ -18,24 +18,24 @@ defineProps({
   <UDashboardPanelContent>
     <div class="flex justify-between">
       <div class="flex items-center gap-4">
-        <UAvatar
-          v-bind="chat.from.avatar"
-          :alt="chat.from.name"
-          size="lg"
-        />
-
         <div class="min-w-0">
           <p class="text-gray-900 dark:text-white font-semibold">
-            {{ chat.from.name }}
+            {{ chat.name }}
           </p>
           <!-- <p class="text-gray-500 dark:text-gray-400 font-medium">
-            {{ chat.subject }}
-          </p> -->
+			  {{ chat.subject }}
+			</p> -->
         </div>
+        <UAvatar
+          v-for="chatUser in chat.chatsUsers"
+          :key="chatUser.user.id"
+          :alt="chatUser.user.name"
+          size="xs"
+        />
       </div>
 
       <p class="font-medium text-gray-900 dark:text-white">
-        {{ isToday(new Date(chat.date)) ? format(new Date(chat.date), 'HH:mm') : format(new Date(chat.date), 'dd MMM') }}
+        <!-- {{ isToday(new Date(chat.date)) ? format(new Date(chat.date), 'HH:mm') : format(new Date(chat.date), 'dd MMM') }} -->
       </p>
     </div>
 
@@ -43,7 +43,7 @@ defineProps({
 
     <div class="flex-1">
       <p class="text-lg">
-        {{ chat.body }}
+        <!-- {{ chat.body }} -->
       </p>
     </div>
 
@@ -55,7 +55,7 @@ defineProps({
         required
         size="xl"
         :rows="5"
-        :placeholder="`Reply to ${chat.from.name}`"
+        :placeholder="`Reply to ${chat.name}`"
       >
         <UButton
           type="submit"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { format, isToday } from 'date-fns'
+// import { format, isToday } from 'date-fns'
 import type { Chat } from '~/types'
 
 const props = defineProps({
@@ -75,20 +75,27 @@ defineShortcuts({
         @click="selectedChat = chat"
       >
         <div
-          class="flex items-center justify-between"
+          class="flex items-center justify-between mb-2"
           :class="[chat.unread && 'font-semibold']"
         >
           <div class="flex items-center gap-3">
-            {{ chat.title }}
+            <span class="">{{ chat.name }}</span>
 
             <UChip v-if="chat.unread" />
           </div>
-
           <!-- <span>{{ isToday(new Date(chat.date)) ? format(new Date(chat.date), 'HH:mm') : format(new Date(chat.date), 'dd MMM') }}</span> -->
         </div>
-        <p class="text-gray-400 dark:text-gray-500 line-clamp-1">
-          <!-- {{ chat.body }} -->
-        </p>
+        <div class="flex items-center gap-3">
+          <UAvatar
+            v-for="chatUser in chat.chatsUsers"
+            :key="chatUser.user.id"
+            :alt="chatUser.user.name"
+            size="xs"
+          />
+        </div>
+        <!-- <p class="text-gray-400 dark:text-gray-500 line-clamp-1"> -->
+        <!-- {{ chat.body }} -->
+        <!-- </p> -->
       </div>
 
       <UDivider />

@@ -2,6 +2,7 @@
 import type { FormError, FormSubmitEvent } from '#ui/types'
 
 const supabase = useSupabaseClient()
+const user = useSupabaseUser()
 
 const groups = [{
   key: 'users',
@@ -11,6 +12,7 @@ const groups = [{
       const { data } = await supabase
         .from('users')
         .select('id, name, avatar, username')
+        .neq('id', user.value.id)
       // .like('name', `%${q}%`)
       return data.map(user => ({ id: user.id, label: user.name, suffix: user.username }))
     }
@@ -19,6 +21,7 @@ const groups = [{
       .from('users')
       .select('id, name, avatar, username')
       .like('name', `%${q}%`)
+      .neq('id', user.value.id)
 
     if (error) {
       console.error(error)
@@ -49,11 +52,32 @@ const validate = (state: any): FormError[] => {
   return errors
 }
 
-async function onSubmit(event: FormSubmitEvent<any>) {
+async function onSubmit() {
   // Do something with data
-  console.log(event.data, selectedUsers.value)
+  const memberIds = selectedUsers.value.map(user => user.id)
+  console.log('Members:', memberIds)
 
+  // create chat
+  const { data, error } = await supabase
+  	.rpc('create_chat_with_members', {
+      chat_name: state.name,
+      members: [
+		  user.value.id,
+        ...memberIds
+      ]
+    })
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  console.log(data)
+
+  // close modal
   emit('close')
+
+//   emit('close')
 }
 </script>
 
@@ -83,7 +107,14 @@ async function onSubmit(event: FormSubmitEvent<any>) {
       :autoselect="false"
       :groups="groups"
       :fuse="{ resultLimit: 6, fuseOptions: { threshold: 0.1 } }"
-    />
+    >
+      <template #empty-state>
+        <div class="flex flex-col items-center justify-center py-6 gap-3">
+          <span class="italic text-sm">Nothing here! Search for users to add them</span>
+          <UButton label="Add item" />
+        </div>
+      </template>
+    </UCommandPalette>
     <!-- <UFormGroup
       label="Members"
       name="members"
