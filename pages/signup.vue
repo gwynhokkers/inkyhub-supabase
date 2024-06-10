@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { object, string, type InferType } from 'yup'
 
+
 const userStore = useUserStore()
 const supabase = useSupabaseClient()
 const toast = useToast()
@@ -81,8 +82,11 @@ const onSubmit = async (formData) => {
     if (data) {
       try {
         await useAsyncData('user', () => userStore.fetchSupabaseUser()).then(() => {
-          toast.add({ title: 'User created', icon: 'i-heroicons-check-circle' })
-		  	navigateTo('/')
+          toast.add({
+            title: 'User created',
+            icon: 'i-heroicons-check-circle'
+          })
+          navigateTo('/')
         })
       } catch (error) {
         console.log(error)

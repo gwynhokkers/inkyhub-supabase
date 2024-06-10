@@ -35,6 +35,8 @@ export default defineNuxtConfig({
   eslint: {
     config: {
       stylistic: {
+        indent: 'tab',
+        semi: false,
         commaDangle: 'never',
         braceStyle: '1tbs'
       }

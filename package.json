@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-ui-pro-template-dashboard",
+  "name": "inky-hub",
   "private": true,
   "type": "module",
   "scripts": {
@@ -23,6 +23,7 @@
     "date-fns": "^3.6.0",
     "nuxt": "^3.11.2",
     "pinia": "^2.1.7",
+    "tweetnacl": "^1.0.3",
     "v-calendar": "^3.1.2",
     "yup": "^1.4.0"
   },
