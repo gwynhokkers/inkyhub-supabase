@@ -45,7 +45,7 @@ onMounted(() => {
 
 <template>
 	<div>
-		<NuxtPwaManifest />
+		<VitePwaManifest />
 
 		<NuxtLoadingIndicator />
 

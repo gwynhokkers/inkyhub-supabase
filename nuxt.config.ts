@@ -44,7 +44,12 @@ export default defineNuxtConfig({
 		}
 	},
 	pwa: {
-		/* your pwa options */
+		manifest: {
+			name: 'Inky Hub - A Hub for cephalopods',
+			short_name: 'Inky Hub',
+			theme_color: '#ff0000',
+			background_color: '#ff0000'
+		}
 	},
 	imports: {
 		dirs: ['stores']
