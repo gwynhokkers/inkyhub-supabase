@@ -9,7 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+	"generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/inky.svg"
   },
   "dependencies": {
     "@iconify-json/heroicons": "^1.1.21",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@nuxt/eslint": "^0.3.12",
     "@nuxtjs/supabase": "^1.2.2",
+    "@vite-pwa/assets-generator": "^0.2.4",
     "eslint": "^9.2.0",
     "vue-tsc": "^2.0.16"
   }

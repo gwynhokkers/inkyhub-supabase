@@ -48,7 +48,38 @@ export default defineNuxtConfig({
 			name: 'Inky Hub - A Hub for cephalopods',
 			short_name: 'Inky Hub',
 			theme_color: '#ff0000',
-			background_color: '#ff0000'
+			background_color: '#ff0000',
+			icons: [
+				{
+					src: 'pwa-192x192.png',
+					sizes: '192x192',
+					type: 'image/png'
+				},
+				{
+					src: 'pwa-512x512.png',
+					sizes: '512x512',
+					type: 'image/png'
+				},
+				{
+					src: 'pwa-512x512.png',
+					sizes: '512x512',
+					type: 'image/png',
+					purpose: 'any'
+				},
+				{
+					src: 'pwa-512x512.png',
+					sizes: '512x512',
+					type: 'image/png',
+					purpose: 'maskable'
+				}
+			]
+		},
+		workbox: {
+			navigateFallback: '/'
+		},
+		devOptions: {
+			enabled: true,
+			type: 'module'
 		}
 	},
 	imports: {
