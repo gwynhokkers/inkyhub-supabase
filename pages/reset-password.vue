@@ -49,7 +49,7 @@ const onSubmit = async () => {
 		<UCard class="max-w-sm w-full">
 			<UAuthForm
 				title="Reset Password"
-				description="Enter your new passwords."
+				description="Create your new password."
 				:schema="schema"
 				:fields="fields"
 				align="top"
