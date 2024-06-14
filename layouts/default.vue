@@ -121,11 +121,12 @@ const colors = computed(() => defaultColors.value.map(color => ({ ...color, acti
 				<UDashboardSidebarLinks :links="links" />
 
 				<UDivider />
-
-				<UDashboardSidebarLinks
-					:links="[{ label: 'Colors', draggable: true, children: colors }]"
-					@update:links="colors => defaultColors = colors"
-				/>
+				<ClientOnly>
+					<UDashboardSidebarLinks
+						:links="[{ label: 'Colors', draggable: true, children: colors }]"
+						@update:links="colors => defaultColors = colors"
+					/>
+				</ClientOnly>
 
 				<div class="flex-1" />
 
@@ -140,6 +141,7 @@ const colors = computed(() => defaultColors.value.map(color => ({ ...color, acti
 			</UDashboardSidebar>
 		</UDashboardPanel>
 
+		<NotificationPushSubscribe />
 		<slot />
 
 		<!-- ~/components/HelpSlideover.vue -->

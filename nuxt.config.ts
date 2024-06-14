@@ -8,7 +8,8 @@ export default defineNuxtConfig({
 		'@vueuse/nuxt',
 		'@nuxtjs/supabase',
 		'@pinia/nuxt',
-		'@vite-pwa/nuxt'
+		'@vite-pwa/nuxt',
+		'nuxt-vuefire'
 	],
 	ui: {
 		icons: ['heroicons', 'simple-icons'],
@@ -43,12 +44,30 @@ export default defineNuxtConfig({
 			}
 		}
 	},
+
+	vuefire: {
+		config: {
+			apiKey: 'AIzaSyBiZRWQ0wF32pBekAy1he3cZ_KWp2v2XJM',
+			authDomain: 'inky-hub.firebaseapp.com',
+			projectId: 'inky-hub',
+			storageBucket: 'inky-hub.appspot.com',
+			messagingSenderId: '988346246167',
+			appId: '1:988346246167:web:53cc52ab80d8fd276c6852',
+			measurementId: 'G-G22NS14SR9'
+		}
+	},
+
 	pwa: {
+		scope: '/',
+		strategies: 'injectManifest',
+		srcDir: 'service-worker',
+		filename: 'sw.ts',
+		registerType: 'autoUpdate',
 		manifest: {
 			name: 'Inky Hub - A Hub for cephalopods',
 			short_name: 'Inky Hub',
-			theme_color: '#ff0000',
-			background_color: '#ff0000',
+			theme_color: '#155a53',
+			background_color: '#155a53',
 			icons: [
 				{
 					src: 'pwa-192x192.png',
@@ -74,8 +93,9 @@ export default defineNuxtConfig({
 				}
 			]
 		},
-		workbox: {
-			navigateFallback: '/'
+		injectManifest: {
+			globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
+			globIgnores: ['emojis/**', 'manifest**.webmanifest']
 		},
 		devOptions: {
 			enabled: true,
