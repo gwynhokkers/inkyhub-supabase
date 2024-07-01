@@ -73,6 +73,10 @@ watch(filteredChats, () => {
 		selectedChat.value = null
 	}
 })
+
+definePageMeta({
+	middleware: 'auth'
+})
 </script>
 
 <template>

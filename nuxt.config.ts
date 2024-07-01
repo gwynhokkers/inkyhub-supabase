@@ -22,18 +22,20 @@ export default defineNuxtConfig({
 		strict: false
 	},
 	supabase: {
-		// redirect: false
-		redirectOptions: {
-			login: '/login',
-			callback: '/confirm',
-			include: undefined,
-			exclude: ['/signup', '/reset-password', '/confirm'],
-			cookieRedirect: false
-		}
+		redirect: false
+		// redirectOptions: {
+		// 	login: '/login',
+		// 	callback: '/confirm',
+		// 	// include: undefined,
+		// 	exclude: ['/signup', '/reset-password', '/confirm', '/'],
+		// 	cookieRedirect: false
+		// }
 	},
+
 	pinia: {
 		storesDirs: ['./stores/**', './custom-folder/stores/**']
 	},
+
 	eslint: {
 		config: {
 			stylistic: {

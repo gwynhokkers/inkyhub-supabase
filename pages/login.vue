@@ -32,8 +32,6 @@ const schema = object({
 })
 
 const onSubmit = async (formData: LoginForm) => {
-//   console.log('signing in...', state.email)
-	console.log('signing in...', formData)
 	error.value = null
 
 	const { data, error: signInError } = await supabase.auth.signInWithPassword({
@@ -44,7 +42,6 @@ const onSubmit = async (formData: LoginForm) => {
 		// }
 	})
 	if (signInError) {
-		// console.log('Error::', error)
 		error.value = signInError.message
 		return
 	}
@@ -52,15 +49,6 @@ const onSubmit = async (formData: LoginForm) => {
 		navigateTo('/')
 	}
 }
-
-// const resetPassword = async () => {
-//   console.log('resetting password...', state.email)
-
-//   const { error } = await supabase.auth.resetPasswordForEmail(state.email, {
-//     redirectTo: 'http://localhost:3000/reset-password'
-//   })
-//   if (error) console.log(error)
-// }
 </script>
 
 <template>

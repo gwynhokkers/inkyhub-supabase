@@ -1,8 +1,4 @@
 <script setup lang="ts">
-definePageMeta({
-	middleware: 'auth'
-})
-
 const links = [[{
 	label: 'General',
 	icon: 'i-heroicons-user-circle',
@@ -27,6 +23,10 @@ const links = [[{
 	to: 'https://ui.nuxt.com/pro/purchase',
 	target: '_blank'
 }]]
+
+definePageMeta({
+	middleware: 'auth'
+})
 </script>
 
 <template>

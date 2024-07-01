@@ -63,6 +63,10 @@ defineShortcuts({
 		input.value?.input?.focus()
 	}
 })
+
+// definePageMeta({
+// 	middleware: 'auth'
+// })
 </script>
 
 <template>

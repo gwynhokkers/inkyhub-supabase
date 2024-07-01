@@ -6,8 +6,10 @@
 // 		closeDatabaseConnections()
 // })
 import { initializeApp } from 'firebase/app'
-import { getMessaging, onBackgroundMessage } from 'firebase/messaging/sw'
+import { getMessaging, onMessage, onBackgroundMessage } from 'firebase/messaging/sw'
 import type { PushPayload } from '~/service-worker/types'
+
+const toast = useToast()
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -37,44 +39,50 @@ onBackgroundMessage(messaging, (payload) => {
 		icon: '/firebase-logo.png'
 	}
 
-	self.registration.showNotification(notificationTitle,
+	self.registration.showNotification(
+		notificationTitle,
 		notificationOptions)
 })
 
-export function onPush(event: PushEvent) {
-	const options: PushPayload = event.data!.json()
-	console.log('onPush', options)
+onMessage(messaging, (payload) => {
+	console.log('Message received. ', payload)
+	toast.add({ title: 'Message received', icon: 'i-heroicons-check-circle' })
+})
 
-	// const { messaging } = useFirebaseMessaging()
+// export function onPush(event: PushEvent) {
+// 	const options: PushPayload = event.data!.json()
+// 	console.log('onPush', options)
 
-	// messaging.onBackgroundMessage((payload) => {
-	// 	console.log('Received background message ', payload)
-	// 	const notificationTitle = payload.notification.title
-	// 	const notificationOptions = {
-	// 		body: payload.notification.body,
-	// 		icon: '/firebase-logo.png'
-	// 	}
+// 	// const { messaging } = useFirebaseMessaging()
 
-	// 	self.registration.showNotification(notificationTitle, notificationOptions)
-	// })
+// 	// messaging.onBackgroundMessage((payload) => {
+// 	// 	console.log('Received background message ', payload)
+// 	// 	const notificationTitle = payload.notification.title
+// 	// 	const notificationOptions = {
+// 	// 		body: payload.notification.body,
+// 	// 		icon: '/firebase-logo.png'
+// 	// 	}
 
-	// const promise = isClientFocused().then((isFocused) => {
-	// 	if (isFocused)
-	// 		return Promise.resolve()
-	// 	const options: PushPayload = event.data!.json()
+// 	// 	self.registration.showNotification(notificationTitle, notificationOptions)
+// 	// })
 
-	// 	return findNotification(options)
-	// 		.catch((e) => {
-	// 			console.error('unhandled error finding notification', e)
-	// 			return Promise.resolve(undefined)
-	// 		})
-	// 		.then((notificationInfo) => {
-	// 			return self.registration.showNotification(options.title, createNotificationOptions(options, notificationInfo))
-	// 		})
-	// })
+// 	// const promise = isClientFocused().then((isFocused) => {
+// 	// 	if (isFocused)
+// 	// 		return Promise.resolve()
+// 	// 	const options: PushPayload = event.data!.json()
 
-	// event.waitUntil(promise)
-}
+// 	// 	return findNotification(options)
+// 	// 		.catch((e) => {
+// 	// 			console.error('unhandled error finding notification', e)
+// 	// 			return Promise.resolve(undefined)
+// 	// 		})
+// 	// 		.then((notificationInfo) => {
+// 	// 			return self.registration.showNotification(options.title, createNotificationOptions(options, notificationInfo))
+// 	// 		})
+// 	// })
+
+// 	// event.waitUntil(promise)
+// }
 
 export function onNotificationClick(event: NotificationEvent) {
 	const reactToNotificationClick = new Promise((resolve) => {

@@ -57,7 +57,7 @@ if (import.meta.env.PROD) {
 		({ request, sameOrigin }) =>
 			sameOrigin && request.destination === 'manifest',
 		new NetworkFirst({
-			cacheName: 'elk-webmanifest',
+			cacheName: 'inky-webmanifest',
 			plugins: [
 				new CacheableResponsePlugin({ statuses: [200] }),
 				// we only need a few entries
@@ -72,7 +72,7 @@ if (import.meta.env.PROD) {
 			&& request.destination === 'image'
 			&& url.pathname.startsWith('/emojis/'),
 		new StaleWhileRevalidate({
-			cacheName: 'elk-emojis',
+			cacheName: 'inky-emojis',
 			plugins: [
 				new CacheableResponsePlugin({ statuses: [200] }),
 				// 15 days max
@@ -86,7 +86,7 @@ if (import.meta.env.PROD) {
 	registerRoute(
 	  ({ sameOrigin, request }) => !sameOrigin && request.destination === 'image',
 	  new NetworkFirst({
-		cacheName: 'elk-external-media',
+		cacheName: 'inky-external-media',
 		plugins: [
 		  // add opaque responses?
 		  new CacheableResponsePlugin({ statuses: [/!* 0, *!/200] }),
@@ -104,8 +104,8 @@ registerRoute(new NavigationRoute(
 	{ allowlist, denylist }
 ))
 
-self.addEventListener('push', onPush)
-self.addEventListener('notificationclick', onNotificationClick)
+// self.addEventListener('push', onPush)
+// self.addEventListener('notificationclick', onNotificationClick)
 // self.addEventListener('fetch', onShareTarget)
 
 // self.skipWaiting()
